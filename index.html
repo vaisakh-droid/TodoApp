@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="contanier">
+        
+        <div class="login-wrapper">
+
+            <div class="message">
+                <div class="msg-wrapper">
+                    
+                    <img src="images/tesla.png" alt="">
+                    <div>
+    
+                        <h3>Todo message</h3>
+                        <p class = "msg">Invalid login credentials.</p>
+    
+                    </div>
+                </div>
+            </div>
+
+            <div class="login">
+                <div class="close">
+                    <h4><ion-icon name="close"></ion-icon></h4>
+                </div>
+                <h3>Welcome to TodoApp</h3>
+                <form action="" method="post">
+                    
+                    <div class="field">
+                        <h4><ion-icon name="at-outline"></ion-icon></h4>
+                        <input type="text" placeholder="Username" name = "username" required class = "username">
+                    </div>
+
+                    <div class="field">
+                        <h4><ion-icon name="key"></ion-icon></h4>
+                        <input type="password" placeholder="Password" name = "password" required class = "password">
+                    </div>
+                    <center>
+
+                        <p>New here? <span>Create a new account</span></p>
+                    </center>
+                    <button type = "button" onclick = "checkSignIn()">Sign In</button>
+                    
+                </form>
+
+            </div>
+
+        </div>
+        <img src="images/pexels-szabolcs-toth-3206153.jpg" alt="" class = "background">
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    
+    <script>
+
+        const redirect = () =>{
+            window.location = "homepage.html";
+        }
+
+        function checkSignIn(){
+            username = document.querySelector('.username').value
+            password = document.querySelector('.password').value
+
+            if (username != 'admin' || password != 'admin'){
+
+                document.querySelector('.message').style.display = "flex"
+                const audio = new Audio();
+                audio.src = 'notification.mp3';
+                audio.play()
+                
+                setTimeout(()=>{
+                    document.querySelector('.message').style.display = "none"
+                },5000)
+            }
+
+            else{
+                redirect()
+            }
+        }
+    </script>
+    
+</body>
+</html>

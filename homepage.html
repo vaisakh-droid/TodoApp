@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="message">
+            <div class="msg-wrapper">
+                
+                <img src="images/tesla.png" alt="">
+                <div>
+
+                    <h3>Todo message</h3>
+                    <p class = "msg">Congrats you have completed 5 tasks.</p>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="text">
+            
+            <h1>Todo List</h1>
+            <p class = "desc">Todo app help's you stay organized and manage your day-to-day tasks.</p>
+         
+        </div>
+
+       
+
+            
+
+            <div class="todos">
+            
+            </div>
+            
+      
+
+         
+    </div>
+    <script>
+        var xmlhttp = new XMLHttpRequest();
+        var url = "https://jsonplaceholder.typicode.com/todos";
+        
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var myArr = JSON.parse(this.responseText);
+                myFunction(myArr);
+                console.log(myArr);
+            }
+        };
+
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+        let count = 0;
+        const listenChange = (element)=>{
+            count = count + 1;
+            
+            element.style.pointerEvents = 'none';
+            element.style.userSelect = 'none';
+            element.parentNode.parentNode.style.textDecoration = 'line-through'
+            element.parentNode.parentNode.style.opacity = '0.3'
+
+            if(count == 5){
+                document.querySelector('.message').style.display = "flex"
+                const audio = new Audio();
+                audio.src = 'notification.mp3';
+                audio.play()
+                count = 0;
+                setTimeout(()=>{
+                    document.querySelector('.message').style.display = "none"
+                },5000)
+            }
+        }
+        function myFunction(arr) {
+            var out = "";
+            var i;
+            for(i = 0; i < arr.length; i++) {
+                todo = document.createElement('div');
+                todo.classList.add('todo')
+                var checked = false
+                check = document.createElement('input')
+                check.type = 'checkbox';
+                var text = document.createElement('h4')
+                
+                if(arr[i].completed){
+                    check = "<input type = 'checkbox' checked='true' onchange='listenChange(this)' style='pointer-events:none;'>"
+                    text.innerHTML = check
+                    checked = true
+                    text.style.textDecoration = 'line-through'
+
+                }
+                else{
+                    check = "<input type = 'checkbox' onchange = 'listenChange(this)'>"
+                    text.innerHTML = check
+                    checked = false
+                }
+
+                
+                
+                todo.append(text)
+
+                text = document.createElement('h3')
+                text.innerText = arr[i].title
+                
+                todo.append(text)
+
+                text2 = document.createElement('h5');
+                text2.innerText = arr[i].id
+                todo.append(text2)
+                if(checked){
+                    todo.style.textDecoration='line-through';
+                    todo.style.opacity = 0.3;
+                }
+                document.querySelector('.todos').append(todo)
+            }
+           
+        }
+
+        
+    </script>
+    <script>
+        
+    
+    </script>
+</body>
+</html>
